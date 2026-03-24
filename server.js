@@ -58,7 +58,15 @@ app.post('/api/submit', async (req, res) => {
     res.status(500).json({ error: 'Database error.' });
   }
 });
-
+// This creates a secret page to view your data
+app.get('/api/leads', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM leads');
+    res.json(result.rows); 
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 // Start Server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
